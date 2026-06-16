@@ -22,6 +22,7 @@ body {
   color: var(--black);
   background: var(--white);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 a {
@@ -58,6 +59,7 @@ textarea {
 .logo {
   display: inline-flex;
   align-items: center;
+  margin-left: -8px;
   font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -69,6 +71,47 @@ textarea {
   max-height: 90px;
   width: auto;
   object-fit: contain;
+}
+
+.nav-runner {
+  margin-left: 10px;
+  color: var(--accent);
+  font-size: 23px;
+  transform: scaleX(-1);
+}
+
+.menu-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  border: 1px solid #e4e4e4;
+  border-radius: 999px;
+  background: var(--white);
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--black);
+  transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.site-header.is-menu-open .menu-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.site-header.is-menu-open .menu-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header.is-menu-open .menu-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .nav-links {
@@ -162,12 +205,40 @@ textarea {
   padding: 110px 0;
 }
 
+.reveal-section {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .hero {
   min-height: calc(100vh - 76px);
   display: grid;
   grid-template-columns: 1fr 0.85fr;
   align-items: center;
   gap: 70px;
+  padding-top: 40px;
+}
+
+.hero-content {
+  animation: heroContentIn 0.8s ease forwards;
+}
+
+@keyframes heroContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .eyebrow {
@@ -218,6 +289,20 @@ h3 {
   height: 620px;
   border-radius: 8px;
   object-fit: cover;
+  object-position: center top;
+  animation: heroImageIn 0.9s ease forwards;
+}
+
+@keyframes heroImageIn {
+  from {
+    opacity: 0;
+    transform: translateX(56px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .split {
@@ -269,6 +354,10 @@ h3 {
   margin-bottom: 26px;
   color: var(--accent);
   font-weight: 800;
+}
+
+.result-card span {
+  margin: 18px 0 0;
 }
 
 .card p,
@@ -378,7 +467,7 @@ textarea {
   gap: 70px;
 }
 
-.contact-section p {
+.contact-section p:not(.eyebrow) {
   margin-top: 22px;
   color: var(--gray);
   font-size: 19px;
@@ -399,20 +488,46 @@ textarea {
   }
 
   .navbar {
+    height: auto;
     flex-wrap: wrap;
-    padding: 16px 0;
+    padding: 10px 0 8px;
+    gap: 10px;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
   }
 
   .nick-logo {
-    max-height: 40px;
+    max-height: 66px;
+  }
+
+  .nav-runner {
+    font-size: 21px;
   }
 
   .nav-links {
     order: 3;
     width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 16px;
+    display: grid;
+    max-height: 0;
+    overflow: hidden;
+    gap: 0;
+    padding: 0;
+    border-top: 0 solid transparent;
+    opacity: 0;
+    transition: max-height 0.28s ease, padding 0.28s ease, opacity 0.2s ease, border-color 0.28s ease;
+  }
+
+  .site-header.is-menu-open .nav-links {
+    max-height: 320px;
+    padding: 10px 0 12px;
+    border-top: 1px solid #eeeeee;
+    opacity: 1;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
   }
 
   .hero,
@@ -422,11 +537,13 @@ textarea {
   }
 
   .hero {
-    padding-top: 70px;
+    min-height: auto;
+    padding-top: 28px;
+    gap: 38px;
   }
 
   .hero-image {
-    height: 420px;
+    height: min(70vw, 420px);
   }
 
   .steps-grid,
@@ -438,19 +555,160 @@ textarea {
   .section {
     padding: 76px 0;
   }
+
+  .section-heading {
+    margin-bottom: 34px;
+  }
+
+  .card,
+  .result-card {
+    padding: 24px;
+  }
 }
 
 @media (max-width: 560px) {
+  .site-header {
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom: 0;
+    clip-path: inset(0 0 7px 0);
+  }
+
+  .site-header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 7px;
+    height: 1px;
+    background: #ececec;
+    pointer-events: none;
+  }
+
+  .site-header.is-menu-open {
+    clip-path: none;
+  }
+
   .navbar,
   .section {
     width: min(100% - 28px, 1180px);
   }
 
-  .footer {
+  .navbar {
+    justify-content: space-between;
+    padding: 0;
+    gap: 6px;
+  }
+
+  .logo {
+    width: auto;
+    margin-left: -10px;
+  }
+
+  .nick-logo {
+    max-height: 68px;
+  }
+
+  .nav-runner {
+    margin-left: 6px;
+    font-size: 19px;
+  }
+
+  .menu-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .nav-links {
+    font-size: 14px;
+  }
+
+  .nav-links a {
+    padding: 9px 0;
+  }
+
+  .button {
+    width: 100%;
+    min-height: 48px;
+    padding-inline: 18px;
+  }
+
+  .hero {
+    padding-top: 8px;
+  }
+
+  .hero-text,
+  .section-copy,
+  .contact-section p {
+    font-size: 17px;
+  }
+
+  .hero-actions {
     display: grid;
   }
 
+  .hero-image {
+    height: 260px;
+    object-position: center 38%;
+  }
+
+  .dark-section {
+    width: 100%;
+    padding-inline: 14px;
+  }
+
+  .benefits-grid {
+    gap: 28px;
+  }
+
+  .contact-form {
+    max-width: none;
+  }
+
+  .footer {
+    display: grid;
+    padding-inline: 14px;
+  }
+
   h1 {
-    font-size: 44px;
+    font-size: 38px;
+    line-height: 1.08;
+  }
+
+  h2 {
+    font-size: 34px;
+  }
+
+  h3,
+  .faq-question {
+    font-size: 21px;
+  }
+}
+
+@media (hover: none) {
+  .nav-links a:hover,
+  .nav-button:hover,
+  .button:hover,
+  .card:hover,
+  .result-card:hover,
+  .faq-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .faq-item:hover {
+    padding-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content,
+  .hero-image {
+    animation: none;
+  }
+
+  .reveal-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

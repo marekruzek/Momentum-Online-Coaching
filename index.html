@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,7 +19,14 @@
           alt="David Novak logo"
           class="nick-logo"
         >
+        <i class="fa-solid fa-person-running nav-runner" aria-hidden="true"></i>
       </a>
+
+      <button class="menu-toggle" type="button" aria-label="Otevřít menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
 
       <div class="nav-links">
         <a href="#about">O mně</a>
@@ -53,7 +61,7 @@
       >
     </section>
 
-    <section id="about" class="section split">
+    <section id="about" class="section split reveal-section">
       <div>
         <p class="eyebrow">O mně</p>
         <h2>Jsem David Novák, online fitness trenér.</h2>
@@ -95,12 +103,12 @@
     </section>
 
     <section class="section dark-section">
-      <div class="section-heading">
+      <div class="section-heading reveal-section">
         <p class="eyebrow">Co získáš</p>
         <h2>Kompletní vedení na cestě za tvým cílem.</h2>
       </div>
 
-      <div class="benefits-grid">
+      <div class="benefits-grid reveal-section">
         <div>
           <h3>Tréninkový plán na míru</h3>
           <p>Plán sestavený podle tvých cílů, možností a životního stylu.</p>
@@ -173,7 +181,7 @@
       </div>
     </section>
 
-    <section id="contact" class="section contact-section">
+    <section id="contact" class="section contact-section reveal-section">
       <div>
         <p class="eyebrow">Kontakt</p>
         <h2>Chceš začít spolupráci?</h2>
