@@ -225,7 +225,7 @@ textarea {
 }
 
 .reveal-from-right.is-visible {
-  animation: faqSlideFromCorner 1.2s linear forwards;
+  animation: faqSlideFromCorner 1s linear forwards;
 }
 
 @keyframes faqSlideFromCorner {
