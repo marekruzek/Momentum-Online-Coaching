@@ -56,6 +56,8 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 });
 
 const revealSections = document.querySelectorAll(".reveal-section");
+const revealFromRightItems = document.querySelectorAll(".reveal-from-right");
+const faqSection = document.querySelector("#faq");
 
 if ("IntersectionObserver" in window) {
   const revealObserver = new IntersectionObserver(
@@ -77,8 +79,41 @@ if ("IntersectionObserver" in window) {
   revealSections.forEach((section) => {
     revealObserver.observe(section);
   });
+
+  if (faqSection && revealFromRightItems.length) {
+    const faqRevealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          revealFromRightItems.forEach((item) => {
+            item.classList.add("is-visible");
+            item.addEventListener(
+              "animationend",
+              () => {
+                item.classList.add("is-animation-done");
+              },
+              { once: true }
+            );
+          });
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.22,
+      }
+    );
+
+    faqRevealObserver.observe(faqSection);
+  }
 } else {
   revealSections.forEach((section) => {
     section.classList.add("is-visible");
+  });
+
+  revealFromRightItems.forEach((item) => {
+    item.classList.add("is-visible");
   });
 }
