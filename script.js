@@ -2,6 +2,17 @@ const header = document.querySelector(".site-header");
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 
+const updateHeaderState = () => {
+  if (!header) {
+    return;
+  }
+
+  header.classList.toggle("is-scrolled", window.scrollY > 12);
+};
+
+updateHeaderState();
+window.addEventListener("scroll", updateHeaderState, { passive: true });
+
 if (header && menuToggle) {
   menuToggle.addEventListener("click", () => {
     const isOpen = header.classList.toggle("is-menu-open");

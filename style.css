@@ -37,12 +37,22 @@ textarea {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100%;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.92);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.22s ease, border-color 0.22s ease, backdrop-filter 0.22s ease, box-shadow 0.22s ease;
+}
+
+.site-header.is-scrolled,
+.site-header.is-menu-open {
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid #ececec;
+  border-bottom-color: #ececec;
+  box-shadow: 0 14px 34px rgba(11, 11, 11, 0.08);
 }
 
 .navbar {
@@ -88,9 +98,9 @@ textarea {
   justify-content: center;
   flex-direction: column;
   gap: 5px;
-  border: 1px solid #e4e4e4;
+  border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 999px;
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.12);
   cursor: pointer;
 }
 
@@ -98,8 +108,19 @@ textarea {
   width: 18px;
   height: 2px;
   border-radius: 999px;
-  background: var(--black);
+  background: var(--white);
   transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.site-header.is-scrolled .menu-toggle,
+.site-header.is-menu-open .menu-toggle {
+  border-color: #e4e4e4;
+  background: var(--white);
+}
+
+.site-header.is-scrolled .menu-toggle span,
+.site-header.is-menu-open .menu-toggle span {
+  background: var(--black);
 }
 
 .site-header.is-menu-open .menu-toggle span:nth-child(1) {
@@ -118,9 +139,14 @@ textarea {
   display: flex;
   align-items: center;
   gap: 28px;
-  color: var(--gray);
+  color: rgba(255, 255, 255, 0.82);
   font-size: 16px;
   font-weight: 600;
+}
+
+.site-header.is-scrolled .nav-links,
+.site-header.is-menu-open .nav-links {
+  color: var(--gray);
 }
 
 .nav-links a {
@@ -175,6 +201,10 @@ textarea {
   color: var(--white);
 }
 
+.site-header:not(.is-scrolled) .nav-button {
+  background: var(--accent);
+}
+
 .nav-button:hover,
 .button:hover,
 .nav-button:focus-visible,
@@ -225,7 +255,7 @@ textarea {
 }
 
 .reveal-from-right.is-visible {
-  animation: faqSlideFromCorner 0.75s linear forwards;
+  animation: faqSlideFromCorner 0.5s linear forwards;
 }
 
 @keyframes faqSlideFromCorner {
@@ -285,15 +315,37 @@ textarea {
 }
 
 .hero {
-  min-height: calc(100vh - 76px);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  min-height: 620px;
   display: grid;
   grid-template-columns: 1fr 0.85fr;
   align-items: center;
   gap: 70px;
-  padding-top: 40px;
+  overflow: hidden;
+  padding: 56px max(20px, calc((100vw - 1180px) / 2)) 0;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.76) 42%, rgba(5, 5, 5, 0.22) 100%),
+    url("images/gym.jpg") center / cover no-repeat;
+  color: var(--white);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 0;
+  height: 42%;
+  background: linear-gradient(0deg, rgba(5, 5, 5, 0.72), rgba(5, 5, 5, 0));
+  pointer-events: none;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 1;
   animation: heroContentIn 0.8s ease forwards;
 }
 
@@ -341,7 +393,7 @@ h3 {
 .hero-text {
   max-width: 620px;
   margin: 26px 0 34px;
-  color: var(--gray);
+  color: rgba(255, 255, 255, 0.78);
   font-size: 19px;
 }
 
@@ -351,13 +403,45 @@ h3 {
   gap: 14px;
 }
 
-.hero-image {
+.hero .button.primary {
+  background: var(--accent);
+}
+
+.hero .button.primary:hover,
+.hero .button.primary:focus-visible {
+  background: var(--white);
+  color: var(--black);
+}
+
+.hero .button.secondary {
+  border-color: rgba(255, 255, 255, 0.46);
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.hero .button.secondary:hover,
+.hero .button.secondary:focus-visible {
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 0;
+}
+
+.hero-trainer {
   display: block;
-  width: 100%;
-  height: 620px;
-  border-radius: 8px;
-  object-fit: cover;
-  object-position: center top;
+  width: min(100%, 540px);
+  max-height: calc(100vh - 118px);
+  object-fit: contain;
+  object-position: center bottom;
+  filter: drop-shadow(0 32px 38px rgba(0, 0, 0, 0.42));
   animation: heroImageIn 0.9s ease forwards;
 }
 
@@ -605,13 +689,24 @@ textarea {
   }
 
   .hero {
+    height: auto;
     min-height: auto;
-    padding-top: 28px;
+    padding-top: 48px;
     gap: 38px;
+    background:
+      linear-gradient(180deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.72) 56%, rgba(5, 5, 5, 0.38) 100%),
+      url("images/gym.jpg") center / cover no-repeat;
   }
 
-  .hero-image {
-    height: min(70vw, 420px);
+  .hero-visual {
+    height: auto;
+    min-height: 420px;
+    justify-content: center;
+  }
+
+  .hero-trainer {
+    width: min(82vw, 430px);
+    max-height: 480px;
   }
 
   .steps-grid,
@@ -641,6 +736,14 @@ textarea {
     clip-path: inset(0 0 7px 0);
   }
 
+  .site-header:not(.is-scrolled):not(.is-menu-open) {
+    background: transparent;
+    border-bottom-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    clip-path: none;
+  }
+
   .site-header::after {
     content: "";
     position: absolute;
@@ -650,6 +753,10 @@ textarea {
     height: 1px;
     background: #ececec;
     pointer-events: none;
+  }
+
+  .site-header:not(.is-scrolled):not(.is-menu-open)::after {
+    opacity: 0;
   }
 
   .site-header.is-menu-open {
@@ -701,7 +808,10 @@ textarea {
   }
 
   .hero {
+    width: 100%;
     padding-top: 8px;
+    padding-bottom: 0;
+    padding-inline: 14px;
   }
 
   .hero-text,
@@ -714,9 +824,14 @@ textarea {
     display: grid;
   }
 
-  .hero-image {
-    height: 260px;
-    object-position: center 38%;
+  .hero-visual {
+    min-height: 320px;
+    margin-top: -8px;
+  }
+
+  .hero-trainer {
+    width: min(92vw, 320px);
+    max-height: 360px;
   }
 
   .dark-section {
@@ -770,7 +885,7 @@ textarea {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-content,
-  .hero-image {
+  .hero-trainer {
     animation: none;
   }
 
