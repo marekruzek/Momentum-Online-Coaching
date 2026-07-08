@@ -15,6 +15,8 @@
 
 html {
   scroll-behavior: smooth;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -23,6 +25,7 @@ body {
   background: var(--white);
   line-height: 1.6;
   overflow-x: hidden;
+  max-width: 100%;
 }
 
 a {
@@ -197,12 +200,9 @@ textarea {
 
 .nav-button,
 .button.primary {
-  background: var(--black);
-  color: var(--white);
-}
-
-.site-header:not(.is-scrolled) .nav-button {
   background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
 }
 
 .nav-button:hover,
@@ -217,6 +217,14 @@ textarea {
 .nav-button:focus-visible,
 .button.primary:hover {
   background: var(--accent);
+  border-color: var(--accent);
+}
+
+.nav-button:hover,
+.nav-button:focus-visible,
+.button.primary:hover,
+.button.primary:focus-visible {
+  box-shadow: none;
 }
 
 .button.secondary {
@@ -322,11 +330,11 @@ textarea {
   height: 100vh;
   min-height: 620px;
   display: grid;
-  grid-template-columns: 1fr 0.85fr;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
   align-items: center;
-  gap: 70px;
+  gap: clamp(36px, 6vw, 110px);
   overflow: hidden;
-  padding: 56px max(20px, calc((100vw - 1180px) / 2)) 0;
+  padding: 56px clamp(24px, 4vw, 76px) 0;
   background:
     linear-gradient(90deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.76) 42%, rgba(5, 5, 5, 0.22) 100%),
     url("images/gym.jpg") center / cover no-repeat;
@@ -346,6 +354,7 @@ textarea {
 .hero-content {
   position: relative;
   z-index: 1;
+  max-width: 860px;
   animation: heroContentIn 0.8s ease forwards;
 }
 
@@ -378,7 +387,7 @@ h3 {
 }
 
 h1 {
-  max-width: 760px;
+  max-width: 840px;
   font-size: clamp(48px, 7vw, 88px);
 }
 
@@ -391,7 +400,7 @@ h3 {
 }
 
 .hero-text {
-  max-width: 620px;
+  max-width: 700px;
   margin: 26px 0 34px;
   color: rgba(255, 255, 255, 0.78);
   font-size: 19px;
@@ -433,15 +442,18 @@ h3 {
   justify-content: flex-end;
   height: 100%;
   min-height: 0;
+  margin-right: clamp(-34px, -2vw, -12px);
 }
 
 .hero-trainer {
   display: block;
-  width: min(100%, 540px);
+  width: min(44vw, 620px);
   max-height: calc(100vh - 118px);
   object-fit: contain;
   object-position: center bottom;
-  filter: drop-shadow(0 32px 38px rgba(0, 0, 0, 0.42));
+  filter:
+    drop-shadow(0 38px 38px rgba(0, 0, 0, 0.56))
+    drop-shadow(0 12px 22px rgba(0, 0, 0, 0.34));
   animation: heroImageIn 0.9s ease forwards;
 }
 
@@ -462,6 +474,29 @@ h3 {
   grid-template-columns: 0.9fr 1fr;
   gap: 70px;
   border-top: 1px solid #e8e8e8;
+}
+
+.experience-stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 26px;
+  color: var(--black);
+}
+
+.experience-stat strong {
+  color: var(--accent);
+  font-size: clamp(46px, 5vw, 64px);
+  line-height: 0.9;
+}
+
+.experience-stat span {
+  max-width: 120px;
+  color: var(--gray);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
 .section-copy {
@@ -634,7 +669,55 @@ textarea {
   color: var(--white);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .section:not(.hero):not(.dark-section) {
+    width: min(100% - 36px, 1180px);
+  }
+
+  .hero {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.6fr);
+    gap: 36px;
+    padding-top: 76px;
+  }
+
+  h1 {
+    font-size: clamp(46px, 6.2vw, 68px);
+  }
+
+  .hero-text {
+    max-width: 560px;
+    font-size: 18px;
+  }
+
+  .hero-visual {
+    margin-right: 0;
+  }
+
+  .hero-trainer {
+    width: min(36vw, 410px);
+    max-height: calc(100svh - 130px);
+  }
+
+  .split,
+  .contact-section {
+    gap: 44px;
+  }
+
+  .steps-grid,
+  .results-grid,
+  .benefits-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .steps-grid .card:nth-child(3),
+  .results-grid .result-card:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+}
+
+@media (max-width: 1100px) {
   .nav-button {
     display: none;
   }
@@ -648,6 +731,21 @@ textarea {
 
   .menu-toggle {
     display: inline-flex;
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: none;
+  }
+
+  .menu-toggle span,
+  .site-header.is-scrolled .menu-toggle span,
+  .site-header.is-menu-open .menu-toggle span {
+    background: var(--white);
+  }
+
+  .site-header.is-scrolled .menu-toggle,
+  .site-header.is-menu-open .menu-toggle {
+    border-color: var(--accent);
+    background: var(--accent);
   }
 
   .nick-logo {
@@ -690,32 +788,39 @@ textarea {
 
   .hero {
     height: auto;
-    min-height: auto;
-    padding-top: 48px;
-    gap: 38px;
+    min-height: 100svh;
+    align-content: start;
+    padding-top: 96px;
+    padding-bottom: 36px;
+    padding-inline: 22px;
+    gap: 28px;
     background:
-      linear-gradient(180deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.72) 56%, rgba(5, 5, 5, 0.38) 100%),
+      linear-gradient(180deg, rgba(5, 5, 5, 0.94) 0%, rgba(5, 5, 5, 0.8) 54%, rgba(5, 5, 5, 0.46) 100%),
       url("images/gym.jpg") center / cover no-repeat;
   }
 
+  .hero-content {
+    max-width: 680px;
+  }
+
+  h1 {
+    font-size: clamp(38px, 5.6vw, 54px);
+  }
+
   .hero-visual {
-    height: auto;
-    min-height: 420px;
+    height: clamp(330px, 40svh, 450px);
+    min-height: 0;
     justify-content: center;
   }
 
   .hero-trainer {
-    width: min(82vw, 430px);
-    max-height: 480px;
+    width: auto;
+    max-width: min(72vw, 430px);
+    height: 100%;
+    max-height: 100%;
   }
 
-  .steps-grid,
-  .results-grid,
-  .benefits-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section {
+  .section:not(.hero):not(.dark-section) {
     padding: 76px 0;
   }
 
@@ -729,7 +834,185 @@ textarea {
   }
 }
 
+@media (min-width: 701px) and (max-width: 1100px) {
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-inline: 42px;
+    padding-top: 146px;
+    padding-bottom: 12px;
+    gap: 34px;
+    background-position: center 56%;
+  }
+
+  .hero-content {
+    max-width: 800px;
+  }
+
+  h1 {
+    font-size: clamp(52px, 7.2vw, 72px);
+  }
+
+  .hero-text {
+    max-width: 700px;
+    font-size: 20px;
+  }
+
+  .hero-visual {
+    height: clamp(430px, 46svh, 590px);
+  }
+
+  .hero-trainer {
+    max-width: min(68vw, 520px);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) and (min-width: 1101px) and (max-width: 1366px) {
+  .nav-button {
+    display: none;
+  }
+
+  .navbar {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px 0 8px;
+    gap: 10px;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: none;
+  }
+
+  .menu-toggle span,
+  .site-header.is-scrolled .menu-toggle span,
+  .site-header.is-menu-open .menu-toggle span {
+    background: var(--white);
+  }
+
+  .site-header.is-scrolled .menu-toggle,
+  .site-header.is-menu-open .menu-toggle {
+    border-color: var(--accent);
+    background: var(--accent);
+  }
+
+  .nick-logo {
+    max-height: 68px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    display: grid;
+    max-height: 0;
+    overflow: hidden;
+    gap: 0;
+    padding: 0;
+    border-top: 0 solid transparent;
+    opacity: 0;
+    transition: max-height 0.28s ease, padding 0.28s ease, opacity 0.2s ease, border-color 0.28s ease;
+  }
+
+  .site-header.is-menu-open .nav-links {
+    max-height: 320px;
+    padding: 10px 0 12px;
+    border-top: 1px solid #eeeeee;
+    opacity: 1;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.78fr);
+    gap: 48px;
+    padding-inline: 52px;
+    padding-top: 142px;
+    padding-bottom: 10px;
+    background-position: center 56%;
+  }
+
+  h1 {
+    font-size: clamp(58px, 5.4vw, 76px);
+  }
+
+  .hero-text {
+    max-width: 700px;
+    font-size: 20px;
+  }
+
+  .hero-trainer {
+    width: min(36vw, 520px);
+  }
+}
+
+@media (min-width: 1101px) and (max-width: 1366px) and (min-height: 800px) {
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: 142px;
+    padding-bottom: 10px;
+    background-position: center 56%;
+  }
+}
+
+@media (max-width: 700px) {
+  .hero {
+    width: 100%;
+    min-height: 100svh;
+    padding-top: 92px;
+    padding-bottom: 28px;
+    padding-inline: 18px;
+    gap: 18px;
+  }
+
+  .hero-content {
+    max-width: none;
+  }
+
+  h1 {
+    font-size: clamp(34px, 8.5vw, 46px);
+    line-height: 1.08;
+  }
+
+  .hero-text {
+    max-width: 620px;
+    margin: 22px 0 26px;
+  }
+
+  .hero-visual {
+    height: clamp(260px, 36svh, 350px);
+  }
+
+  .hero-trainer {
+    max-width: min(84vw, 340px);
+  }
+
+  .steps-grid,
+  .results-grid,
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid .card:nth-child(3),
+  .results-grid .result-card:nth-child(3) {
+    grid-column: auto;
+  }
+}
+
 @media (max-width: 560px) {
+  main,
+  .site-header,
+  .hero {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   .site-header {
     background: rgba(255, 255, 255, 0.96);
     border-bottom: 0;
@@ -764,7 +1047,7 @@ textarea {
   }
 
   .navbar,
-  .section {
+  .section:not(.hero):not(.dark-section) {
     width: min(100% - 28px, 1180px);
   }
 
@@ -780,44 +1063,71 @@ textarea {
   }
 
   .nick-logo {
-    max-height: 68px;
+    max-height: 74px;
   }
 
   .nav-runner {
     margin-left: 6px;
-    font-size: 19px;
+    font-size: 21px;
   }
 
   .menu-toggle {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: none;
+  }
+
+  .menu-toggle span,
+  .site-header.is-scrolled .menu-toggle span,
+  .site-header.is-menu-open .menu-toggle span {
+    background: var(--white);
+  }
+
+  .site-header.is-scrolled .menu-toggle,
+  .site-header.is-menu-open .menu-toggle {
+    border-color: var(--accent);
+    background: var(--accent);
   }
 
   .nav-links {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .nav-links a {
-    padding: 9px 0;
+    padding: 10px 0;
   }
 
   .button {
     width: 100%;
-    min-height: 48px;
-    padding-inline: 18px;
+    min-height: 54px;
+    padding-inline: 20px;
+    font-size: 16px;
   }
 
   .hero {
+    max-width: 100%;
     width: 100%;
-    padding-top: 8px;
-    padding-bottom: 0;
-    padding-inline: 14px;
+    min-height: 100svh;
+    padding-top: 90px;
+    padding-bottom: 18px;
+    padding-inline: 16px;
+    gap: 14px;
   }
 
   .hero-text,
   .section-copy,
   .contact-section p {
-    font-size: 17px;
+    font-size: 19px;
+  }
+
+  .experience-stat {
+    margin-top: 22px;
+  }
+
+  .hero-text {
+    margin: 22px 0 28px;
   }
 
   .hero-actions {
@@ -825,13 +1135,16 @@ textarea {
   }
 
   .hero-visual {
-    min-height: 320px;
-    margin-top: -8px;
+    height: clamp(280px, 35svh, 385px);
+    min-height: 0;
+    margin-top: 0;
   }
 
   .hero-trainer {
-    width: min(92vw, 320px);
-    max-height: 360px;
+    width: auto;
+    max-width: min(86vw, 390px);
+    height: 100%;
+    max-height: 100%;
   }
 
   .dark-section {
@@ -853,17 +1166,65 @@ textarea {
   }
 
   h1 {
-    font-size: 38px;
+    font-size: clamp(38px, 10vw, 48px);
     line-height: 1.08;
   }
 
   h2 {
-    font-size: 34px;
+    font-size: 36px;
   }
 
   h3,
   .faq-question {
-    font-size: 21px;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 390px) {
+  .navbar,
+  .section:not(.hero):not(.dark-section) {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .hero {
+    padding-top: 80px;
+    padding-bottom: 10px;
+    padding-inline: 14px;
+    gap: 10px;
+  }
+
+  .eyebrow {
+    margin-bottom: 15px;
+    font-size: 13px;
+  }
+
+  .hero-text {
+    font-size: 19px;
+    margin: 22px 0 28px;
+  }
+
+  .hero-visual {
+    height: clamp(268px, 34svh, 350px);
+  }
+
+  h1 {
+    font-size: clamp(38px, 10.6vw, 45px);
+  }
+}
+
+@media (max-height: 720px) and (max-width: 560px) {
+  .hero {
+    padding-top: 78px;
+    padding-bottom: 8px;
+    gap: 10px;
+  }
+
+  .hero-text {
+    margin: 20px 0 26px;
+  }
+
+  .hero-visual {
+    height: clamp(250px, 33svh, 330px);
   }
 }
 
