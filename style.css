@@ -1246,10 +1246,15 @@ textarea {
 
 @media (max-width: 560px) {
   main,
-  .site-header,
+  .site-header {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
   .hero {
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   .site-header {
