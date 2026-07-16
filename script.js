@@ -6,11 +6,7 @@ const formStatus = document.querySelector(".form-status");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const updateViewportHeight = () => {
-  const viewportHeight = window.visualViewport
-    ? window.visualViewport.height
-    : window.innerHeight;
-
-  document.documentElement.style.setProperty("--app-height", `${viewportHeight}px`);
+  document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
 };
 
 updateViewportHeight();
@@ -19,10 +15,6 @@ window.addEventListener("orientationchange", () => {
   updateViewportHeight();
   window.setTimeout(updateViewportHeight, 250);
 });
-
-if (window.visualViewport) {
-  window.visualViewport.addEventListener("resize", updateViewportHeight, { passive: true });
-}
 
 const updateHeaderState = () => {
   if (!header) {
@@ -69,7 +61,7 @@ window.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("resize", () => {
-  if (window.matchMedia("(min-width: 1101px)").matches) {
+  if (window.matchMedia("(min-width: 701px)").matches) {
     closeMenu();
   }
 }, { passive: true });
@@ -97,7 +89,7 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     const openedMenuHeight = wasMenuOpen && navLinks ? navLinks.offsetHeight : 0;
     const headerHeight = header ? header.offsetHeight - openedMenuHeight : 0;
     const compactStartSections = ["#about", "#coaching", "#results", "#faq", "#contact"];
-    const isCompactNav = window.matchMedia("(max-width: 1100px)").matches;
+    const isCompactNav = window.matchMedia("(max-width: 700px)").matches;
     const isDesktopNavTopic =
       link.closest(".nav-links") &&
       !isCompactNav &&
