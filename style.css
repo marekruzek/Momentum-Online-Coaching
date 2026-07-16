@@ -34,17 +34,6 @@ a {
   text-decoration: none;
 }
 
-:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 4px;
-}
-
-button,
-input,
-textarea {
-  font: inherit;
-}
-
 .skip-link {
   position: fixed;
   top: 14px;
@@ -63,16 +52,10 @@ textarea {
   transform: translateY(0);
 }
 
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
+button,
+input,
+textarea {
+  font: inherit;
 }
 
 .site-header {
@@ -190,9 +173,6 @@ textarea {
 
 .nav-links a {
   position: relative;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
@@ -224,7 +204,6 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
   border-radius: 999px;
   padding: 13px 22px;
   font-weight: 700;
@@ -358,15 +337,13 @@ textarea {
   will-change: auto;
 }
 
-.faq-item.reveal-from-right.is-visible.is-animation-done:hover {
-  transform: none;
-}
-
 .hero {
   position: relative;
   isolation: isolate;
-  width: 100%;
-  max-width: none;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   height: 100vh;
   min-height: 620px;
   display: grid;
@@ -580,8 +557,8 @@ h3 {
   position: absolute;
   top: 18%;
   bottom: 0;
-  left: -12px;
-  width: calc(100vw + 24px);
+  left: 0;
+  width: 100vw;
   z-index: 0;
   opacity: 1;
   pointer-events: none;
@@ -709,8 +686,10 @@ h3 {
 }
 
 .dark-section {
-  width: 100%;
-  max-width: none;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   padding-inline: max(20px, calc((100vw - 1180px) / 2));
   background: var(--black);
   color: var(--white);
@@ -737,8 +716,10 @@ h3 {
 }
 
 .faq-section {
-  width: 100%;
-  max-width: none;
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   padding-inline: max(20px, calc((100vw - 1180px) / 2));
   background: var(--black);
   color: var(--white);
@@ -746,6 +727,27 @@ h3 {
 
 .faq-section .section-heading {
   margin-left: 0;
+}
+
+@supports (width: 100dvw) {
+  .hero,
+  .dark-section,
+  .faq-section,
+  .results-section {
+    width: 100dvw;
+    max-width: 100dvw;
+    margin-left: calc(50% - 50dvw);
+    margin-right: calc(50% - 50dvw);
+  }
+
+  .results-growth-chart {
+    width: 100dvw;
+  }
+
+  .dark-section,
+  .faq-section {
+    padding-inline: max(20px, calc((100dvw - 1180px) / 2));
+  }
 }
 
 .contact-form {
@@ -774,20 +776,9 @@ textarea:focus {
   border-color: var(--accent);
 }
 
-input:focus-visible,
-textarea:focus-visible {
-  box-shadow: 0 0 0 4px rgba(233, 133, 58, 0.18);
-}
-
 textarea {
   min-height: 150px;
   resize: vertical;
-}
-
-.form-status {
-  min-height: 24px;
-  color: var(--gray);
-  font-size: 15px;
 }
 
 .faq-list {
@@ -802,30 +793,10 @@ textarea {
 .faq-item {
   border-bottom: 1px solid #e0e0e0;
   padding-left: 0;
-  transition: transform 0.22s ease, padding-left 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
 .faq-section .faq-item {
   border-bottom-color: #333;
-}
-
-.faq-item:hover {
-  transform: none;
-  padding-left: 0;
-  border-color: rgba(233, 133, 58, 0.45);
-  box-shadow:
-    inset 0 1px 0 rgba(233, 133, 58, 0.45),
-    inset 0 -1px 0 rgba(233, 133, 58, 0.45);
-}
-
-.faq-question,
-.faq-answer {
-  transition: transform 0.22s ease;
-}
-
-.faq-item:hover .faq-question,
-.faq-item:hover .faq-answer {
-  transform: translateX(16px);
 }
 
 .faq-question {
@@ -879,7 +850,8 @@ textarea {
   }
 
   .hero {
-    width: 100%;
+    width: 100vw;
+    max-width: 100vw;
     grid-template-columns: minmax(0, 1fr) minmax(260px, 0.6fr);
     gap: 36px;
     padding-top: 76px;
@@ -970,8 +942,7 @@ textarea {
     padding: 0;
     border-top: 0 solid transparent;
     opacity: 0;
-    visibility: hidden;
-    transition: max-height 0.28s ease, padding 0.28s ease, opacity 0.2s ease, border-color 0.28s ease, visibility 0s linear 0.28s;
+    transition: max-height 0.28s ease, padding 0.28s ease, opacity 0.2s ease, border-color 0.28s ease;
   }
 
   .site-header.is-menu-open .nav-links {
@@ -979,8 +950,6 @@ textarea {
     padding: 10px 0 12px;
     border-top: 1px solid #eeeeee;
     opacity: 1;
-    visibility: visible;
-    transition-delay: 0s;
   }
 
   .nav-links a {
@@ -1119,8 +1088,7 @@ textarea {
     padding: 0;
     border-top: 0 solid transparent;
     opacity: 0;
-    visibility: hidden;
-    transition: max-height 0.28s ease, padding 0.28s ease, opacity 0.2s ease, border-color 0.28s ease, visibility 0s linear 0.28s;
+    transition: max-height 0.28s ease, padding 0.28s ease, opacity 0.2s ease, border-color 0.28s ease;
   }
 
   .site-header.is-menu-open .nav-links {
@@ -1128,8 +1096,6 @@ textarea {
     padding: 10px 0 12px;
     border-top: 1px solid #eeeeee;
     opacity: 1;
-    visibility: visible;
-    transition-delay: 0s;
   }
 
   .nav-links a {
@@ -1172,13 +1138,9 @@ textarea {
 }
 
 @media (max-width: 700px) {
-  .section:not(.hero) {
-    padding-top: 68px;
-    padding-bottom: 68px;
-  }
-
   .hero {
-    width: 100%;
+    width: 100vw;
+    max-width: 100vw;
     min-height: var(--app-height);
     padding-top: 92px;
     padding-bottom: 28px;
@@ -1225,11 +1187,6 @@ textarea {
 }
 
 @media (max-width: 560px) {
-  .section:not(.hero) {
-    padding-top: 56px;
-    padding-bottom: 56px;
-  }
-
   main,
   .site-header,
   .hero {
@@ -1331,8 +1288,8 @@ textarea {
   }
 
   .hero {
-    max-width: 100%;
-    width: 100%;
+    width: 100vw;
+    max-width: 100vw;
     min-height: var(--app-height);
     padding-top: 90px;
     padding-bottom: 18px;
@@ -1372,7 +1329,8 @@ textarea {
   }
 
   .dark-section {
-    width: 100%;
+    width: 100vw;
+    max-width: 100vw;
     padding-inline: 14px;
   }
 
@@ -1457,27 +1415,13 @@ textarea {
   .nav-button:hover,
   .button:hover,
   .card:hover,
-  .result-card:hover,
-  .faq-item:hover {
+  .result-card:hover {
     transform: none;
     box-shadow: none;
-  }
-
-  .faq-item:hover {
-    padding-left: 0;
-  }
-
-  .faq-item:hover .faq-question,
-  .faq-item:hover .faq-answer {
-    transform: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .hero-content,
   .hero-trainer {
     animation: none;
