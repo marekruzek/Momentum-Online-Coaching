@@ -5,17 +5,6 @@ const contactForm = document.querySelector(".contact-form");
 const formStatus = document.querySelector(".form-status");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-const updateViewportHeight = () => {
-  document.documentElement.style.setProperty("--app-height", `${window.innerHeight}px`);
-};
-
-updateViewportHeight();
-window.addEventListener("resize", updateViewportHeight, { passive: true });
-window.addEventListener("orientationchange", () => {
-  updateViewportHeight();
-  window.setTimeout(updateViewportHeight, 250);
-});
-
 const updateHeaderState = () => {
   if (!header) {
     return;
