@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marekruzek.github.io/Momentum-Online-Coaching/sitemap.xml

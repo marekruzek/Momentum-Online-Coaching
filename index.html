@@ -3,33 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>David Novák Online Coaching</title>
+  <title>David Novák Online Coaching | Online fitness trenér</title>
+  <meta name="description" content="Online fitness coaching Davida Nováka pro trénink, výživu a dlouhodobě udržitelný progres bez extrémních diet.">
+  <link rel="canonical" href="https://marekruzek.github.io/Momentum-Online-Coaching/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:title" content="David Novák Online Coaching">
+  <meta property="og:description" content="Individuální online fitness coaching pro trénink, výživu a udržitelný progres.">
+  <meta property="og:url" content="https://marekruzek.github.io/Momentum-Online-Coaching/">
+  <meta property="og:site_name" content="David Novák Online Coaching">
+  <!-- TODO: Přidat sociální náhled images/og-image.jpg o rozměru 1200 × 630 px a doplnit og:image/twitter:image. -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="David Novák Online Coaching">
+  <meta name="twitter:description" content="Individuální online fitness coaching pro trénink, výživu a udržitelný progres.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "David Novák Online Coaching",
+      "url": "https://marekruzek.github.io/Momentum-Online-Coaching/",
+      "inLanguage": "cs-CZ",
+      "description": "Online fitness coaching zaměřený na trénink, výživu a dlouhodobě udržitelný progres."
+    }
+  </script>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Přeskočit na hlavní obsah</a>
   <header class="site-header">
-    <nav class="navbar">
-      <a href="#hero" class="logo">
+    <nav class="navbar" aria-label="Hlavní navigace">
+      <a href="#hero" class="logo" aria-label="David Novák Online Coaching - úvod">
         <img
           src="images/logodavid.png"
           alt="David Novak logo"
           class="nick-logo"
+          width="1024"
+          height="1024"
+          decoding="async"
         >
         <i class="fa-solid fa-person-running nav-runner" aria-hidden="true"></i>
       </a>
 
-      <button class="menu-toggle" type="button" aria-label="Otevřít menu" aria-expanded="false">
+      <button class="menu-toggle" type="button" aria-label="Otevřít menu" aria-expanded="false" aria-controls="primary-navigation">
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <div class="nav-links">
+      <div class="nav-links" id="primary-navigation">
         <a href="#about">O mně</a>
         <a href="#coaching">Coaching</a>
         <a href="#results">Výsledky</a>
@@ -41,7 +67,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <section id="hero" class="hero section">
       <div class="hero-content">
         <p class="eyebrow">Online fitness coaching</p>
@@ -60,6 +86,10 @@
           src="images/hero-trainer-cropped.png"
           alt=""
           class="hero-trainer"
+          width="474"
+          height="1424"
+          fetchpriority="high"
+          decoding="async"
         >
       </div>
     </section>
@@ -84,34 +114,9 @@
       </div>
     </section>
 
-    <section id="coaching" class="section">
-      <div class="section-heading">
-        <p class="eyebrow">Coaching</p>
-        <h2>Jak funguje online coaching</h2>
-      </div>
-
-      <div class="steps-grid">
-        <article class="card">
-          <span>01</span>
-          <h3>Vstupní konzultace</h3>
-          <p>Poznáme tvůj cíl, možnosti a výchozí situaci.</p>
-        </article>
-        <article class="card">
-          <span>02</span>
-          <h3>Plán na míru</h3>
-          <p>Dostaneš trénink a výživu sestavené přímo pro tebe.</p>
-        </article>
-        <article class="card">
-          <span>03</span>
-          <h3>Průběžná kontrola</h3>
-          <p>Kontrolujeme progres, upravujeme plán a společně směřujeme k tvému cíli.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section dark-section">
+    <section id="coaching" class="section dark-section">
       <div class="section-heading reveal-section">
-        <p class="eyebrow">Co získáš</p>
+        <p class="eyebrow">Coaching</p>
         <h2>Kompletní vedení na cestě za tvým cílem.</h2>
       </div>
 
@@ -135,32 +140,46 @@
       </div>
     </section>
 
-    <section id="results" class="section">
-      <div class="section-heading">
-        <p class="eyebrow">Výsledky klientů</p>
-        <h2>Výsledky, které nejsou postavené na extrému.</h2>
+    <section id="results" class="section results-section">
+      <div class="results-growth-chart reveal-section" aria-hidden="true">
+        <svg viewBox="0 0 1000 520" preserveAspectRatio="none" focusable="false">
+          <path class="growth-area" d="M0 520 L0 438 C120 420 168 376 250 358 C354 335 405 282 500 260 C616 233 667 167 760 139 C864 108 914 58 1000 22 L1000 520 Z"></path>
+          <path class="growth-line" pathLength="1" d="M0 438 C120 420 168 376 250 358 C354 335 405 282 500 260 C616 233 667 167 760 139 C864 108 914 58 1000 22"></path>
+          <circle class="growth-point point-start" cx="24" cy="434" r="8"></circle>
+          <circle class="growth-point point-one" cx="250" cy="358" r="9"></circle>
+          <circle class="growth-point point-two" cx="500" cy="260" r="9"></circle>
+          <circle class="growth-point point-three" cx="760" cy="139" r="9"></circle>
+          <circle class="growth-point point-end" cx="976" cy="34" r="9"></circle>
+        </svg>
       </div>
 
-      <div class="results-grid">
-        <article class="result-card">
-          <h3>-12 kg za 4 měsíce</h3>
-          <p>"Konečně mám jasný plán, kterého se dokážu držet i při práci. Nemusel jsem trávit hodiny v posilovně ani držet nesmyslné diety."</p>
-          <span>Martin, 34 let</span>
-        </article>
-        <article class="result-card">
-          <h3>Lepší kondice a větší jistota</h3>
-          <p>"Dnes už vím, jak trénovat a jak se stravovat. Přestal jsem zkoušet náhodné rady z internetu a konečně mám systém."</p>
-          <span>Lucie, 41 let</span>
-        </article>
-        <article class="result-card">
-          <h3>Silnější tělo a více energie</h3>
-          <p>"Nejvíc mi vyhovovalo, že celý plán byl přizpůsobený mému běžnému týdnu. Nemusel jsem obracet svůj život naruby."</p>
-          <span>Petra, 29 let</span>
-        </article>
+      <div class="results-content">
+        <div class="section-heading">
+          <p class="eyebrow">Výsledky klientů</p>
+          <h2>Výsledky, které nejsou postavené na extrému.</h2>
+        </div>
+
+        <div class="results-grid">
+          <article class="result-card">
+            <h3>-12 kg za 4 měsíce</h3>
+            <p>"Konečně mám jasný plán, kterého se dokážu držet i při práci. Nemusel jsem trávit hodiny v posilovně ani držet nesmyslné diety."</p>
+            <span>Martin, 34 let</span>
+          </article>
+          <article class="result-card">
+            <h3>Lepší kondice a větší jistota</h3>
+            <p>"Dnes už vím, jak trénovat a jak se stravovat. Přestal jsem zkoušet náhodné rady z internetu a konečně mám systém."</p>
+            <span>Lucie, 41 let</span>
+          </article>
+          <article class="result-card">
+            <h3>Silnější tělo a více energie</h3>
+            <p>"Nejvíc mi vyhovovalo, že celý plán byl přizpůsobený mému běžnému týdnu. Nemusel jsem obracet svůj život naruby."</p>
+            <span>Petra, 29 let</span>
+          </article>
+        </div>
       </div>
     </section>
 
-    <section id="faq" class="section">
+    <section id="faq" class="section faq-section">
       <div class="section-heading">
         <p class="eyebrow">FAQ</p>
         <h2>Nejčastější otázky</h2>
@@ -195,11 +214,21 @@
         <p>Napiš mi krátce, jaký máš cíl, a ozvu se ti s dalším postupem.</p>
       </div>
 
-      <form class="contact-form">
-        <input type="text" placeholder="Jméno">
-        <input type="email" placeholder="E-mail">
-        <textarea placeholder="Tvůj cíl"></textarea>
+      <form class="contact-form" novalidate>
+        <label>
+          <span class="visually-hidden">Jméno</span>
+          <input type="text" name="name" placeholder="Jméno" autocomplete="name" required>
+        </label>
+        <label>
+          <span class="visually-hidden">E-mail</span>
+          <input type="email" name="email" placeholder="E-mail" autocomplete="email" required>
+        </label>
+        <label>
+          <span class="visually-hidden">Tvůj cíl</span>
+          <textarea name="goal" placeholder="Tvůj cíl" autocomplete="off" required></textarea>
+        </label>
         <button type="submit" class="button primary">Odeslat poptávku</button>
+        <p class="form-status" aria-live="polite"></p>
       </form>
     </section>
   </main>

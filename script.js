@@ -1,6 +1,28 @@
 const header = document.querySelector(".site-header");
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
+const contactForm = document.querySelector(".contact-form");
+const formStatus = document.querySelector(".form-status");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+const updateViewportHeight = () => {
+  const viewportHeight = window.visualViewport
+    ? window.visualViewport.height
+    : window.innerHeight;
+
+  document.documentElement.style.setProperty("--app-height", `${viewportHeight}px`);
+};
+
+updateViewportHeight();
+window.addEventListener("resize", updateViewportHeight, { passive: true });
+window.addEventListener("orientationchange", () => {
+  updateViewportHeight();
+  window.setTimeout(updateViewportHeight, 250);
+});
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", updateViewportHeight, { passive: true });
+}
 
 const updateHeaderState = () => {
   if (!header) {
@@ -13,6 +35,25 @@ const updateHeaderState = () => {
 updateHeaderState();
 window.addEventListener("scroll", updateHeaderState, { passive: true });
 
+const getSectionCenterScrollTop = (section) => {
+  const sectionRect = section.getBoundingClientRect();
+  const sectionCenter = window.scrollY + sectionRect.top + sectionRect.height / 2;
+
+  return sectionCenter - window.innerHeight / 2;
+};
+
+const getScrollBehavior = () => prefersReducedMotion.matches ? "auto" : "smooth";
+
+const closeMenu = () => {
+  if (!header || !menuToggle) {
+    return;
+  }
+
+  header.classList.remove("is-menu-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Otevřít menu");
+};
+
 if (header && menuToggle) {
   menuToggle.addEventListener("click", () => {
     const isOpen = header.classList.toggle("is-menu-open");
@@ -20,6 +61,18 @@ if (header && menuToggle) {
     menuToggle.setAttribute("aria-label", isOpen ? "Zavřít menu" : "Otevřít menu");
   });
 }
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeMenu();
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.matchMedia("(min-width: 1101px)").matches) {
+    closeMenu();
+  }
+}, { passive: true });
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener("click", (event) => {
@@ -39,32 +92,70 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 
     const wasMenuOpen = header ? header.classList.contains("is-menu-open") : false;
 
-    if (header && menuToggle) {
-      header.classList.remove("is-menu-open");
-      menuToggle.setAttribute("aria-expanded", "false");
-      menuToggle.setAttribute("aria-label", "Otevřít menu");
-    }
+    closeMenu();
 
     const openedMenuHeight = wasMenuOpen && navLinks ? navLinks.offsetHeight : 0;
     const headerHeight = header ? header.offsetHeight - openedMenuHeight : 0;
-    const mobileStartSections = ["#coaching", "#results", "#faq"];
-    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+    const compactStartSections = ["#about", "#coaching", "#results", "#faq", "#contact"];
+    const isCompactNav = window.matchMedia("(max-width: 1100px)").matches;
+    const isDesktopNavTopic =
+      link.closest(".nav-links") &&
+      !isCompactNav &&
+      sectionId !== "#contact";
+    const shouldCenterTopic =
+      Boolean(isDesktopNavTopic);
     const shouldAlignEyebrow =
-      isMobile && mobileStartSections.includes(sectionId);
+      isCompactNav &&
+      link.closest(".nav-links") &&
+      compactStartSections.includes(sectionId);
+
+    if (shouldCenterTopic) {
+      const targetPosition = getSectionCenterScrollTop(section);
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+
+      window.scrollTo({
+        top: Math.max(0, Math.min(targetPosition, maxScroll)),
+        behavior: getScrollBehavior(),
+      });
+
+      return;
+    }
+
     const targetElement = shouldAlignEyebrow
-      ? section.querySelector(".eyebrow") || section
-      : section;
-    const extraOffset = shouldAlignEyebrow ? 10 : 24;
-    const targetPosition =
-      window.scrollY + targetElement.getBoundingClientRect().top - headerHeight - extraOffset;
+        ? section.querySelector(".eyebrow") || section
+        : section;
+    const revealOffset = sectionId === "#about" && !section.classList.contains("is-visible") ? 48 : 0;
+    const extraOffset = shouldAlignEyebrow ? 10 + revealOffset : 24;
+    const targetRect = targetElement.getBoundingClientRect();
+    const targetPosition = window.scrollY + targetRect.top - headerHeight - extraOffset;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollTop = Math.max(0, Math.min(targetPosition, maxScroll));
 
     window.scrollTo({
-      top: Math.max(0, Math.min(targetPosition, maxScroll)),
-      behavior: "smooth",
+      top: scrollTop,
+      behavior: getScrollBehavior(),
     });
   });
 });
+
+if (contactForm && formStatus) {
+  contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    if (!contactForm.checkValidity()) {
+      formStatus.textContent = "Vyplň prosím všechna povinná pole ve správném formátu.";
+      contactForm.reportValidity();
+      return;
+    }
+
+    formStatus.textContent =
+      "Toto je ukázkový formulář pro portfolio. Zpráva se zatím nikam neodesílá.";
+  });
+
+  contactForm.addEventListener("input", () => {
+    formStatus.textContent = "";
+  });
+}
 
 const revealSections = document.querySelectorAll(".reveal-section");
 const revealFromRightItems = document.querySelectorAll(".reveal-from-right");
