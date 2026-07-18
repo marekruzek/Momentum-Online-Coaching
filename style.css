@@ -760,6 +760,9 @@ h3 {
   display: grid;
   gap: 16px;
   max-width: 620px;
+  padding: 26px;
+  border: 1px solid #e2e2e2;
+  border-radius: 16px;
 }
 
 label {
