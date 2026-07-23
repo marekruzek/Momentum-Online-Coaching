@@ -3,6 +3,7 @@ const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 const contactForm = document.querySelector(".contact-form");
 const formStatus = document.querySelector(".form-status");
+const backToTopButton = document.querySelector(".back-to-top");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 const applyCzechTypography = (root = document.body) => {
@@ -41,10 +42,19 @@ const updateHeaderState = () => {
   }
 
   header.classList.toggle("is-scrolled", window.scrollY > 12);
+  backToTopButton?.classList.toggle(
+    "is-visible",
+    window.scrollY > 700 && window.matchMedia("(max-width: 1100px)").matches
+  );
 };
 
 updateHeaderState();
 window.addEventListener("scroll", updateHeaderState, { passive: true });
+window.addEventListener("resize", updateHeaderState, { passive: true });
+
+backToTopButton?.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: prefersReducedMotion.matches ? "auto" : "smooth" });
+});
 
 const getSectionCenterScrollTop = (section) => {
   const sectionRect = section.getBoundingClientRect();

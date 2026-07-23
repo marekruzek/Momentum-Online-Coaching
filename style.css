@@ -70,8 +70,10 @@ textarea {
   left: 0;
   width: 100%;
   z-index: 10;
-  background: transparent;
-  border-bottom: 1px solid transparent;
+  background: rgba(8, 8, 8, 0.3);
+  backdrop-filter: blur(14px) saturate(115%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   transition: background 0.22s ease, border-color 0.22s ease, backdrop-filter 0.22s ease, box-shadow 0.22s ease;
 }
 
@@ -166,7 +168,7 @@ textarea {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 34px;
   color: rgba(255, 255, 255, 0.82);
   font-size: 16px;
   font-weight: 600;
@@ -360,7 +362,7 @@ textarea {
   padding: 56px clamp(24px, 4vw, 76px) 0;
   background:
     linear-gradient(90deg, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.76) 42%, rgba(5, 5, 5, 0.22) 100%),
-    url("images/gym.jpg") center / cover no-repeat;
+    url("images/hero-gym-v2.png") center / cover no-repeat;
   color: var(--white);
 }
 
@@ -463,6 +465,7 @@ h3 {
   z-index: 1;
   align-self: end;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   height: 100%;
   min-height: 0;
@@ -471,8 +474,8 @@ h3 {
 
 .hero-trainer {
   display: block;
-  width: min(42vw, 590px);
-  max-height: calc(100vh - 132px);
+  width: min(40vw, 560px);
+  max-height: calc(100vh - 174px);
   object-fit: contain;
   object-position: center bottom;
   filter:
@@ -931,7 +934,49 @@ textarea {
   color: var(--white);
 }
 
+.back-to-top {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 9;
+  display: none;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background: rgba(11, 11, 11, 0.82);
+  color: var(--white);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.back-to-top:focus-visible {
+  outline: 3px solid rgba(233, 133, 58, 0.45);
+  outline-offset: 3px;
+}
+
 @media (max-width: 1100px) {
+  .back-to-top {
+    display: grid;
+  }
+
+  .back-to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .site-header:not(.is-scrolled):not(.is-menu-open) {
+    background: rgba(8, 8, 8, 0.36);
+    backdrop-filter: blur(16px) saturate(118%);
+  }
+
   .section:not(.hero):not(.dark-section):not(.faq-section):not(.results-section) {
     width: min(100% - 36px, 1180px);
   }
@@ -944,6 +989,7 @@ textarea {
     padding-top: 76px;
     overflow-y: visible;
     overflow-x: clip;
+    background-position: 78% center;
   }
 
   h1 {
@@ -1061,7 +1107,7 @@ textarea {
     gap: 28px;
     background:
       linear-gradient(180deg, rgba(5, 5, 5, 0.94) 0%, rgba(5, 5, 5, 0.8) 54%, rgba(5, 5, 5, 0.46) 100%),
-      url("images/gym.jpg") center / cover no-repeat;
+      url("images/hero-gym-v2.png") center / cover no-repeat;
   }
 
   .hero-content {
@@ -1107,7 +1153,7 @@ textarea {
     padding-top: 146px;
     padding-bottom: 12px;
     gap: 34px;
-    background-position: center 56%;
+    background-position: 78% 56%;
   }
 
   .hero-content {
@@ -1285,6 +1331,7 @@ textarea {
     padding-bottom: 28px;
     padding-inline: 18px;
     gap: 18px;
+    background-position: 84% center;
   }
 
   .hero-content {
@@ -1345,10 +1392,10 @@ textarea {
   }
 
   .site-header:not(.is-scrolled):not(.is-menu-open) {
-    background: transparent;
-    border-bottom-color: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
+    background: rgba(8, 8, 8, 0.42);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(16px) saturate(118%);
     clip-path: none;
   }
 
@@ -1377,6 +1424,7 @@ textarea {
   }
 
   .navbar {
+    height: 68px;
     justify-content: space-between;
     padding: 0;
     gap: 6px;
@@ -1388,17 +1436,17 @@ textarea {
   }
 
   .nick-logo {
-    max-height: 74px;
+    max-height: 58px;
   }
 
   .nav-runner {
     margin-left: 6px;
-    font-size: 21px;
+    font-size: 19px;
   }
 
   .menu-toggle {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-color: var(--accent);
     background: var(--accent);
     box-shadow: none;
@@ -1582,7 +1630,7 @@ textarea {
     min-height: var(--app-height);
     padding-left: max(64px, calc(env(safe-area-inset-left) + 30px));
     padding-right: max(48px, calc(env(safe-area-inset-right) + 30px));
-    background-position: center;
+    background-position: 78% center;
   }
 
   .hero-content {
