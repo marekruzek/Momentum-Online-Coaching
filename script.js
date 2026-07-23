@@ -132,11 +132,17 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
       return;
     }
 
-    const targetElement = shouldAlignEyebrow
+    const targetElement = sectionId === "#contact"
+      ? section.querySelector(".eyebrow") || section
+      : shouldAlignEyebrow
         ? section.querySelector(".eyebrow") || section
         : section;
     const revealOffset = sectionId === "#about" && !section.classList.contains("is-visible") ? 48 : 0;
-    const extraOffset = shouldAlignEyebrow ? 10 + revealOffset : 24;
+    const extraOffset = sectionId === "#contact"
+      ? 8
+      : shouldAlignEyebrow
+        ? 10 + revealOffset
+        : 24;
     const targetRect = targetElement.getBoundingClientRect();
     const targetPosition = window.scrollY + targetRect.top - headerHeight - extraOffset;
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
