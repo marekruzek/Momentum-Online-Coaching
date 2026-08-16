@@ -35,4 +35,4 @@ Co jsem se na projektu naučil
 
 Live Demo
 
-https://marekruzek.github.io/Momentum-Online-Coaching/
+http://momentum.marekruzek.cz/
